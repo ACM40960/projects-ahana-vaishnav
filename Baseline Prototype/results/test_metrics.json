@@ -1,0 +1,22 @@
+{
+    "best_threshold": 0.04,
+    "best_validation_f1": 1.0,
+    "test_loss": 0.11611416935920715,
+    "test_accuracy_default_metric": 0.8571428656578064,
+    "test_precision_default_metric": 1.0,
+    "test_recall_default_metric": 0.7118644118309021,
+    "test_roc_auc_metric": 1.0,
+    "test_pr_auc_metric": 1.0,
+    "roc_auc_sklearn": 1.0,
+    "pr_auc_sklearn": 1.0,
+    "confusion_matrix_best_threshold": [
+        [
+            60,
+            0
+        ],
+        [
+            0,
+            59
+        ]
+    ]
+}
