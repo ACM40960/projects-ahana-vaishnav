@@ -1,0 +1,10 @@
+numpy
+pandas
+matplotlib
+scikit-learn
+tensorflow
+astropy
+h5py
+pyyaml
+deeplenstronomy
+lenstronomy

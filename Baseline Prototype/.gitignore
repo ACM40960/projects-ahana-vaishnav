@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+
+# Environments
+.env/
+.venv/
+.ipynb_checkpoints/
+
+# Data files
+data/*.npy
+data/*.h5
+data/*.fits
+
+# Model files
+models/*.keras
+models/*.h5
+
+# Large generated folders
+lens_challenge_data/deeplenstronomy/MySimulationResults/
+lens_challenge_data/deeplenstronomy/MySimulationResults_demo/
+lens_challenge_data/deeplenstronomy/project_dataset/
+
+# Mac files
+.DS_Store
