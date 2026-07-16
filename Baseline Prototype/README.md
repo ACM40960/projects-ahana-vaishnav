@@ -14,7 +14,7 @@ The final CNN-ready data files are:
 - `data/X.npy`
 - `data/y.npy`
 
-These files are not uploaded to GitHub because they are generated data files.
+These files are in the data folder and are generated data files.
 
 ## Model
 
