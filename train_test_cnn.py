@@ -277,3 +277,14 @@ plt.close()
 print("\nSaved results in:", outdir)
 print("Best model:", outdir / "best_baseline_cnn.keras")
 print("Final model:", outdir / "final_baseline_cnn.keras")
+
+print("Predicted probabilities:")
+print("min:", y_prob.min())
+print("max:", y_prob.max())
+print("mean:", y_prob.mean())
+
+print("Non-lens probabilities:")
+print(y_prob[y_test == 0][:20])
+
+print("Lens probabilities:")
+print(y_prob[y_test == 1][:20])
