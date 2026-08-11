@@ -14,15 +14,13 @@ from PIL import Image, UnidentifiedImageError
 # 1. Paths
 # ==================================================
 
-BASE_FOLDER = Path(
-    r"D:\MSc Data and Computational Science"
-    r"\Gravitational Lensing\Gravitational_Lensing_Project"
-    r"\projects-ahana-vaishnav-ahanabhattacharji-Strong-Gravitational-Lens-Finding-Challenge"
-    r"\Real Data pipeline"
-)
+# Relative path: this script lives in "Real Data pipeline/scripts/",
+# so its parent's parent is "Real Data pipeline/" itself. Works on any
+# machine the repo is cloned to, no hardcoded drive/user path needed.
+BASE_FOLDER = Path(__file__).resolve().parent.parent
 
-# Galaxy10 file lives outside the repo folder — set directly.
-H5_PATH = Path(r"D:\Galaxy10_DECals.h5")
+# Galaxy10 file now lives inside the repo, under data/raw/.
+H5_PATH = BASE_FOLDER / "data" / "raw" / "Galaxy10_DECals.h5"
 
 LENSCAT_PATH = BASE_FOLDER / "data" / "catalog.csv"
 

@@ -43,12 +43,10 @@ import torchvision.transforms.v2 as T
 # 1. Paths — same folder as your other scripts
 # --------------------------------------------------
 
-BASE_FOLDER = Path(
-    r"D:\MSc Data and Computational Science"
-    r"\Gravitational Lensing\Gravitational_Lensing_Project"
-    r"\projects-ahana-vaishnav-ahanabhattacharji-Strong-Gravitational-Lens-Finding-Challenge"
-    r"\Real Data pipeline"
-)
+# Relative path: this script lives in "Real Data pipeline/scripts/",
+# so its parent's parent is "Real Data pipeline/" itself. Works on any
+# machine the repo is cloned to, no hardcoded drive/user path needed.
+BASE_FOLDER = Path(__file__).resolve().parent.parent
 
 METADATA_PATH = BASE_FOLDER / "data" / "metadata" / "quality_metadata.csv"
 RESULTS_DIR = BASE_FOLDER / "results" / "real_data_cnn"

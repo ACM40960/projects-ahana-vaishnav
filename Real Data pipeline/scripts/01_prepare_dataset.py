@@ -12,10 +12,10 @@ from PIL import Image, UnidentifiedImageError
 # 1. Project paths
 # ==================================================
 
-BASE_FOLDER = Path(
-    r"D:\MSc Data and Computational Science"
-    r"\Gravitational Lensing\Datasets"
-)
+# Relative path: this script lives in "Real Data pipeline/scripts/",
+# so its parent's parent is "Real Data pipeline/" itself. Works on any
+# machine the repo is cloned to, no hardcoded drive/user path needed.
+BASE_FOLDER = Path(__file__).resolve().parent.parent
 
 # Change "lens" to "confident" here if that is your folder name.
 LENS_FOLDER = BASE_FOLDER / "data" / "raw" / "lens"
