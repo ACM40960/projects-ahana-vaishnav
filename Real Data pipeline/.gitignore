@@ -1,1 +1,3 @@
 data/raw/Galaxy10_DECals.h5 
+
+models/vit_transfer_learning/*.pt
