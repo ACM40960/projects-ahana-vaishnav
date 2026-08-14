@@ -1,0 +1,19 @@
+{
+    "model_key": "cbam",
+    "model_name": "CBAM-Attention CNN",
+    "input_size": 128,
+    "mean": [
+        44.998722076416016,
+        43.80983352661133,
+        41.39533233642578
+    ],
+    "std": [
+        46.30428695678711,
+        44.99614334106445,
+        44.18217086791992
+    ],
+    "gradcam_layer": "conv3",
+    "test_roc_auc": 0.9845176841422149,
+    "test_accuracy": 0.9319727891156463,
+    "best_threshold": 0.38
+}

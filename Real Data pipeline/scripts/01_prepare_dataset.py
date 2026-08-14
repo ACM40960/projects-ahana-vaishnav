@@ -1,29 +1,24 @@
 from pathlib import Path
 import hashlib
 import random
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from PIL import Image, UnidentifiedImageError
 
 
-# ==================================================
-# 1. Project paths
-# ==================================================
-
-# Relative path: this script lives in "Real Data pipeline/scripts/",
-# so its parent's parent is "Real Data pipeline/" itself. Works on any
-# machine the repo is cloned to, no hardcoded drive/user path needed.
+# Go back to the main project folder from the scripts folder
 BASE_FOLDER = Path(__file__).resolve().parent.parent
 
-# Change "lens" to "confident" here if that is your folder name.
+# Image folders
 LENS_FOLDER = BASE_FOLDER / "data" / "raw" / "lens"
 NON_LENS_FOLDER = BASE_FOLDER / "data" / "raw" / "non_lens"
 
+# Output folders
 METADATA_FOLDER = BASE_FOLDER / "data" / "metadata"
 FIGURE_FOLDER = BASE_FOLDER / "figures"
 
+# Output files
 LABELS_PATH = METADATA_FOLDER / "labels.csv"
 DUPLICATES_PATH = METADATA_FOLDER / "duplicate_images.csv"
 GRID_PATH = FIGURE_FOLDER / "dataset_sample_grid.png"
@@ -31,56 +26,24 @@ GRID_PATH = FIGURE_FOLDER / "dataset_sample_grid.png"
 METADATA_FOLDER.mkdir(parents=True, exist_ok=True)
 FIGURE_FOLDER.mkdir(parents=True, exist_ok=True)
 
-
-# ==================================================
-# 2. Settings
-# ==================================================
-
 RANDOM_SEED = 42
 VALID_EXTENSIONS = {".jpg", ".jpeg", ".png"}
 
 random.seed(RANDOM_SEED)
 
-
-# ==================================================
-# 3. Helper functions
-# ==================================================
-
 def calculate_file_hash(file_path: Path) -> str:
-    """Calculate SHA-256 hash for duplicate detection."""
-
+    # Used to find exact duplicate image files
     hasher = hashlib.sha256()
-
     with file_path.open("rb") as file:
-        while True:
-            chunk = file.read(8192)
-
-            if not chunk:
-                break
-
+        while chunk := file.read(8192):
             hasher.update(chunk)
-
     return hasher.hexdigest()
 
-
-def scan_image_folder(
-    folder: Path,
-    label: int,
-    class_name: str,
-) -> list[dict]:
-    """Read and validate all images in one class folder."""
-
+def scan_image_folder(folder: Path, label: int, class_name: str) -> list[dict]:
+    # Read all images in a folder and collect basic information about them
     if not folder.exists():
-        raise FileNotFoundError(
-            f"Image folder was not found:\n{folder}"
-        )
-
-    image_paths = sorted(
-        path
-        for path in folder.rglob("*")
-        if path.suffix.lower() in VALID_EXTENSIONS
-    )
-
+        raise FileNotFoundError(f"Image folder not found:\n{folder}")
+    image_paths = sorted(p for p in folder.rglob("*")if p.suffix.lower() in VALID_EXTENSIONS)
     records = []
 
     for image_path in image_paths:
@@ -104,7 +67,6 @@ def scan_image_folder(
             with Image.open(image_path) as image:
                 image = image.convert("RGB")
                 image_array = np.asarray(image)
-
                 record["readable"] = 1
                 record["width"] = image.width
                 record["height"] = image.height
@@ -114,70 +76,24 @@ def scan_image_folder(
                 record["file_hash"] = calculate_file_hash(image_path)
 
         except (UnidentifiedImageError, OSError) as error:
+            # Mark bad images instead of stopping the whole script
             record["usable"] = 0
             record["notes"] = f"Unreadable image: {error}"
-
         records.append(record)
-
     return records
 
-
-# ==================================================
-# 4. Scan both classes
-# ==================================================
-
+# Scan both classes
 records = []
-
-records.extend(
-    scan_image_folder(
-        folder=LENS_FOLDER,
-        label=1,
-        class_name="lens",
-    )
-)
-
-records.extend(
-    scan_image_folder(
-        folder=NON_LENS_FOLDER,
-        label=0,
-        class_name="presumed_non_lens",
-    )
-)
-
+records.extend(scan_image_folder(LENS_FOLDER,label=1,class_name="lens"))
+records.extend(scan_image_folder(NON_LENS_FOLDER,label=0,class_name="presumed_non_lens"))
 metadata = pd.DataFrame(records)
 
+# Check for exact duplicate files using image hashes
+duplicates = metadata[metadata.duplicated(subset="file_hash", keep=False) & metadata["file_hash"].notna()].copy()
+duplicates.to_csv(DUPLICATES_PATH, index=False)
+metadata.to_csv(LABELS_PATH, index=False)
 
-# ==================================================
-# 5. Detect duplicates
-# ==================================================
-
-duplicate_mask = metadata.duplicated(
-    subset="file_hash",
-    keep=False,
-) & metadata["file_hash"].notna()
-
-duplicates = metadata[duplicate_mask].copy()
-
-duplicates.to_csv(
-    DUPLICATES_PATH,
-    index=False,
-)
-
-
-# ==================================================
-# 6. Save labels
-# ==================================================
-
-metadata.to_csv(
-    LABELS_PATH,
-    index=False,
-)
-
-
-# ==================================================
-# 7. Print audit results
-# ==================================================
-
+# Basic dataset checks
 print("\nDataset summary:")
 print(metadata["class_name"].value_counts())
 
@@ -185,87 +101,37 @@ print("\nReadable images:")
 print(metadata.groupby("class_name")["readable"].sum())
 
 print("\nImage dimensions:")
-print(
-    metadata.groupby(
-        ["class_name", "width", "height"]
-    )
-    .size()
-    .reset_index(name="count")
-)
+print(metadata.groupby(["class_name", "width", "height"]).size().reset_index(name="count"))
 
-print(f"\nDuplicate records found: {len(duplicates)}")
+print(f"\nDuplicates found: {len(duplicates)}")
 
 if not duplicates.empty:
-    print(
-        duplicates[
-            [
-                "image_id",
-                "class_name",
-                "file_path",
-                "file_hash",
-            ]
-        ].to_string(index=False)
-    )
+    print(duplicates[["image_id", "class_name", "file_path", "file_hash"]].to_string(index=False))
+print(f"\nLabels saved to: {LABELS_PATH}")
+print(f"Duplicates saved to: {DUPLICATES_PATH}")
 
-print(f"\nMetadata saved to:\n{LABELS_PATH}")
-print(f"Duplicate report saved to:\n{DUPLICATES_PATH}")
+# Keep only images that can actually be used
+usable = metadata[(metadata["readable"] == 1) & (metadata["usable"] == 1)].copy()\
 
+# Take a small random sample from both classes for visual checking
+lens_sample = usable[usable["label"] == 1].sample(n=min(8, (usable["label"] == 1).sum()),random_state=RANDOM_SEED)
+non_lens_sample = usable[usable["label"] == 0].sample(n=min(8, (usable["label"] == 0).sum()),random_state=RANDOM_SEED)
+sample = pd.concat([lens_sample, non_lens_sample],ignore_index=True)
 
-# ==================================================
-# 8. Create a sample image grid
-# ==================================================
-
-usable_metadata = metadata[
-    (metadata["readable"] == 1)
-    & (metadata["usable"] == 1)
-].copy()
-
-lens_sample = usable_metadata[
-    usable_metadata["label"] == 1
-].sample(
-    n=min(8, sum(usable_metadata["label"] == 1)),
-    random_state=RANDOM_SEED,
-)
-
-non_lens_sample = usable_metadata[
-    usable_metadata["label"] == 0
-].sample(
-    n=min(8, sum(usable_metadata["label"] == 0)),
-    random_state=RANDOM_SEED,
-)
-
-sample = pd.concat(
-    [lens_sample, non_lens_sample],
-    ignore_index=True,
-)
-
-fig, axes = plt.subplots(
-    4,
-    4,
-    figsize=(12, 12),
-)
-
+# Make a quick grid so the dataset can be inspected visually
+fig, axes = plt.subplots(4, 4, figsize=(12, 12))
 axes = axes.flatten()
 
 for ax, (_, row) in zip(axes, sample.iterrows()):
-    image = Image.open(row["file_path"]).convert("RGB")
-
-    ax.imshow(image)
-    ax.set_title(
-        f"{row['image_id']}\n{row['class_name']}",
-        fontsize=8,
-    )
+    ax.imshow(Image.open(row["file_path"]).convert("RGB"))
+    ax.set_title(f"{row['image_id']}\n{row['class_name']}",fontsize=8)
     ax.axis("off")
 
+# Turn off unused grid spaces if there are fewer than 16 images
 for ax in axes[len(sample):]:
     ax.axis("off")
 
 plt.tight_layout()
-plt.savefig(
-    GRID_PATH,
-    dpi=200,
-    bbox_inches="tight",
-)
+plt.savefig(GRID_PATH, dpi=200, bbox_inches="tight")
 plt.show()
-
-print(f"\nSample grid saved to:\n{GRID_PATH}")
+print(f"\nSample grid saved to: {GRID_PATH}")

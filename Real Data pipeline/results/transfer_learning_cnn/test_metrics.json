@@ -1,5 +1,5 @@
 {
-    "model": "MobileNetV3-Small (frozen backbone, transfer learning)",
+    "model": "MobileNetV3-Small transfer learning",
     "trainable_params": 18497,
     "total_params": 945505,
     "n_train": 2744,
@@ -7,12 +7,13 @@
     "n_test": 588,
     "best_threshold": 0.47000000000000003,
     "best_validation_f1": 0.9434628975265018,
-    "test_accuracy_default_metric": 0.9472789115646258,
-    "test_precision_default_metric": 0.9466192170818505,
-    "test_recall_default_metric": 0.9432624113475178,
-    "roc_auc_sklearn": 0.9808325221341491,
-    "pr_auc_sklearn": 0.9833011488722667,
-    "confusion_matrix_best_threshold": [
+    "test_accuracy": 0.9472789115646258,
+    "test_precision": 0.9466192170818505,
+    "test_recall": 0.9432624113475178,
+    "test_f1": 0.9449378330373002,
+    "test_roc_auc": 0.9808325221341491,
+    "test_pr_auc": 0.9833011488722667,
+    "confusion_matrix": [
         [
             291,
             15
