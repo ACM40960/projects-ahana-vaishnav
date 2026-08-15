@@ -207,6 +207,15 @@ for epoch in range(1, MAX_EPOCHS + 1):
         print(f"Early stopping at epoch {epoch}")
         break
 
+# Save training history so we can compare learning curves later
+history_df = pd.DataFrame(history)
+history_df.insert(0, "epoch", range(1, len(history_df) + 1))
+
+history_path = RESULTS_DIR / "training_history.csv"
+history_df.to_csv(history_path, index=False)
+
+print(f"Saved training history to: {history_path}")
+
 # Restore best model before final evaluation
 model.load_state_dict(torch.load(best_model_path))
 print(f"Restored best weights (val_loss={best_val_loss:.4f})")
