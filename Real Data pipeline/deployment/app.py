@@ -158,7 +158,7 @@ MODEL_REGISTRY = {
         "roc_auc": 0.983, "accuracy": 0.944, "threshold": 0.41,
         "precision": 0.940, "recall": 0.943,
         "example_grid": "gradcam_grid.png",
-        "dev_note": "This is where everything started — a simple three-block CNN built from scratch on real Legacy Survey imagery. No pretrained weights, no borrowed architecture. Just Conv→Pool×2→GAP→Dense. The fact that it reaches 0.983 ROC-AUC against models 10× more complex is probably the most satisfying result in this whole project.",
+        "dev_note": "This is where everything started. A simple three-block CNN built from scratch on real Legacy Survey imagery, no pretrained weights, no borrowed architecture. Just Conv→Pool×2→GAP→Dense. Getting 0.983 ROC-AUC out of that, against models ten times more complex, is probably the most satisfying result in this whole project.",
         "arch_layers": [
             ("Input\n128×128×3", "#1e3a5f"),
             ("Conv2d\n16 filters", "#164e63"),
@@ -183,7 +183,7 @@ MODEL_REGISTRY = {
         "roc_auc": 0.985, "accuracy": 0.932, "threshold": 0.38,
         "precision": 0.906, "recall": 0.957,
         "example_grid": "cbam_attention_grid.png",
-        "dev_note": "Our personal favourite. CBAM inserts channel and spatial attention after each conv block — so the model learns where to look as part of training, not just as a post-hoc explanation. When you look at the Grad-CAM heatmaps here, you are seeing something the network genuinely paid attention to during training. That matters more to us than the extra 0.007 ROC-AUC ViT has over it — though it does trade some precision for that higher recall, so it flags more false positives than CNN or ViT.",
+        "dev_note": "Our personal favourite. CBAM inserts channel and spatial attention after each conv block, so the model learns where to look as part of training instead of as a post-hoc explanation. When you look at the Grad-CAM heatmaps here, you're seeing something the network genuinely paid attention to while it trained. That matters more to us than the extra 0.007 ROC-AUC ViT has on it, though it does trade away some precision for that higher recall, so it flags more false positives than CNN or ViT.",
         "arch_layers": [
             ("Input\n128×128×3", "#1e3a5f"),
             ("Conv2d\n16 filters", "#164e63"),
@@ -210,7 +210,7 @@ MODEL_REGISTRY = {
         # confusion_matrix_best_threshold, so they match the confusion matrix exactly.
         "roc_auc": 0.981, "accuracy": 0.947, "threshold": 0.47,
         "precision": 0.947, "recall": 0.943,
-        "dev_note": "We froze the entire MobileNetV3 backbone pretrained on ImageNet and only trained a small classification head on top. The fact that ImageNet features — learned on everyday photos of cats and cars — transfer this well to astronomical survey images is genuinely surprising. It still scores slightly below our custom CNN though. Domain gap is real.",
+        "dev_note": "We froze the entire MobileNetV3 backbone pretrained on ImageNet and only trained a small classification head on top. It's genuinely surprising how well ImageNet features, learned from everyday photos of cats and cars, transfer to astronomical survey images. It still scores slightly below our custom CNN though. Domain gap is real.",
         "arch_layers": [
             ("Input\n128×128×3", "#1e3a5f"),
             ("MobileNetV3\nBackbone\n(frozen)", "#1a3a1a"),
@@ -234,7 +234,7 @@ MODEL_REGISTRY = {
         "input_size": 224,
         "precision": 0.985, "recall": 0.936,
         "example_grid": "vit_attention_grid.png",
-        "dev_note": "Best model by every metric — 0.992 ROC-AUC and only 4 false positives out of 306 non-lens test images, which is why precision (0.985) is its standout number. ViT sees the whole image at once through self-attention across 196 patches, which suits ring and arc detection better than local conv filters. The full weights are 330MB so we only ship the 98KB classification head and re-download the frozen backbone on first load. Worth the wait.",
+        "dev_note": "Best model by every metric. It gets 0.992 ROC-AUC and only 4 false positives out of 306 non-lens test images, which is why precision (0.985) is its standout number. ViT sees the whole image at once through self-attention across 196 patches, which suits ring and arc detection better than local conv filters do. The full weights are 330MB, so we only ship the 98KB classification head and re-download the frozen backbone on first load. Worth the wait.",
         "arch_layers": [
             ("Input\n224×224×3", "#1e3a5f"),
             ("Patch Split\n196 patches\n16×16 each", "#1e3a5f"),
@@ -360,8 +360,8 @@ def render_active_model_snapshot(reg):
             if grid_path.exists():
                 st.image(str(grid_path), use_container_width=True)
                 st.caption(
-                    "Sampled test-set predictions with explainability overlays — "
-                    "includes both correct and incorrect calls so the failure modes are visible, not just the wins."
+                    "Sampled test-set predictions with explainability overlays. "
+                    "Includes both correct and incorrect calls, so the failure modes are visible, not just the wins."
                 )
             else:
                 st.caption(f"Copy `{example_grid_name}` into `{FIGURES_DIR.name}/` to display it here.")
@@ -369,7 +369,7 @@ def render_active_model_snapshot(reg):
             st.caption("No example prediction grid was generated for this model yet.")
     st.html(textwrap.dedent(f"""
 <div class="dev-note">
-<span class="dev-note-label">Developer Note — {reg['label']}</span>
+<span class="dev-note-label">Developer Note: {reg['label']}</span>
 <div class="dev-note-text">{reg['dev_note']}</div>
 </div>
 """))
@@ -618,7 +618,7 @@ if _hero_bg:
 </style>
 """))
 else:
-    # No live external fallback here on purpose — the app should never depend
+    # No live external fallback here on purpose. The app should never depend
     # on a network fetch at demo time. If the local file is missing, the
     # hero card just falls back to its plain CSS gradient (no photo).
     st.warning(
@@ -726,19 +726,19 @@ if True:
     st.html(textwrap.dedent("""
 <div class="glass-card">
 <b>Gravitational lensing</b> is a direct consequence of Einstein's general
-relativity: mass curves spacetime, and light travelling through that
+relativity. Mass curves spacetime, and light travelling through that
 curved spacetime bends off its straight-line path. When a massive
 <b>foreground galaxy</b> (the "lens") sits almost exactly between us and a
 much more distant <b>background galaxy</b> (the "source"), its gravity
 bends the source's light around it from multiple directions at once.
 <br><br>
-Because the light rays bend rather than travel straight, the background
-galaxy doesn't just look dimmer or displaced — its image gets smeared into
+Because the light rays bend instead of travelling straight, the background
+galaxy doesn't just look dimmer or displaced. Its image gets smeared into
 curved <b>arcs</b>, or in the most perfectly aligned cases, a complete
 <b>Einstein ring</b> encircling the lens galaxy. This is <b>strong
-lensing</b>: the regime where the distortion is dramatic enough to see
-directly in an image, as opposed to <i>weak lensing</i>, where the effect
-is a subtle statistical stretching averaged over many galaxies.
+lensing</b>, the regime where the distortion is dramatic enough to see
+directly in an image. That's different from <i>weak lensing</i>, where the
+effect is a subtle statistical stretching averaged over many galaxies.
 </div>
 """))
     lens_diagram_path = FIGURES_DIR / "gravitational_lensing_diagram.png"
@@ -758,12 +758,12 @@ is a subtle statistical stretching averaged over many galaxies.
     st.html(textwrap.dedent("""
 <div class="glass-card">
 Strong lenses matter scientifically because the amount and shape of the
-distortion depends on how much mass — including invisible <b>dark
-matter</b> — sits in the foreground galaxy. They act as natural
+distortion depends on how much mass sits in the foreground galaxy,
+including invisible <b>dark matter</b>. They act as natural
 gravitational telescopes, magnifying faint, extremely distant background
 galaxies that would otherwise be too faint to study. But genuine strong
 lenses are also <b>rare</b>, and modern sky surveys capture millions to
-billions of objects — far too many for manual expert inspection to scale.
+billions of objects, which is far too many for manual expert inspection to scale.
 This app demonstrates a <b>CNN-based classification prototype</b> that
 flags likely lens candidates automatically, paired with <b>Grad-CAM
 explainability</b> so predictions can be visually inspected rather than
@@ -776,15 +776,15 @@ trusted blindly.
 <div class="fact-grid">
 <div class="fact-item"><div class="fact-number">01</div><div>
 <div class="fact-content-title">Rare-Object Detection</div>
-<div class="fact-content-body">Genuine strong lenses are a tiny fraction of all survey objects. To learn discriminative features, we trained on a <b>class-balanced</b> curated set — but the model is deployed against surveys where positives are vanishingly rare, which is why precision matters as much as recall in practice.</div>
+<div class="fact-content-body">Genuine strong lenses are a tiny fraction of all survey objects. To learn discriminative features, we trained on a <b>class-balanced</b> curated set, but the model is deployed against surveys where positives are vanishingly rare, which is why precision matters as much as recall in practice.</div>
 </div></div>
 <div class="fact-item"><div class="fact-number">02</div><div>
 <div class="fact-content-title">False Positives</div>
-<div class="fact-content-body">Spiral galaxies, ring galaxies, mergers, bright stars, and imaging artefacts can all visually resemble lensing features — precision matters as much as recall.</div>
+<div class="fact-content-body">Spiral galaxies, ring galaxies, mergers, bright stars, and imaging artefacts can all visually resemble lensing features, so precision matters just as much as recall.</div>
 </div></div>
 <div class="fact-item"><div class="fact-number">03</div><div>
 <div class="fact-content-title">Survey Scale</div>
-<div class="fact-content-body">Modern astronomical surveys capture millions to billions of objects — far too many for manual expert inspection to scale to this volume.</div>
+<div class="fact-content-body">Modern astronomical surveys capture millions to billions of objects, far too many for manual expert inspection to scale to.</div>
 </div></div>
 <div class="fact-item"><div class="fact-number">04</div><div>
 <div class="fact-content-title">Explainable AI</div>
@@ -795,8 +795,8 @@ trusted blindly.
     with st.expander("See sample training images (lens vs. non-lens)", expanded=False):
         show_result_figure(
             "dataset_sample_grid",
-            caption="Confident lens systems (top) vs. presumed non-lens galaxies (bottom) from the training set — "
-                    "same galaxies matched pairwise where possible, to keep brightness and morphology comparable.",
+            caption="Confident lens systems (top) vs. presumed non-lens galaxies (bottom) from the training set. "
+                    "We matched the same galaxies pairwise where possible, to keep brightness and morphology comparable.",
         )
     st.html(textwrap.dedent("""
 <span class="section-label">Data</span>
@@ -804,7 +804,7 @@ trusted blindly.
 <div class="fact-grid">
 <div class="fact-item"><div class="fact-number">01</div><div>
 <div class="fact-content-title">4,076 labelled images</div>
-<div class="fact-content-body">2,038 confident lens systems (catalogue-listed) paired with 2,038 presumed non-lens galaxies, drawn from real Legacy Survey / Galaxy10 imagery — not simulations.</div>
+<div class="fact-content-body">2,038 confident lens systems (catalogue-listed) paired with 2,038 presumed non-lens galaxies, drawn from real Legacy Survey / Galaxy10 imagery. No simulated images.</div>
 </div></div>
 <div class="fact-item"><div class="fact-number">02</div><div>
 <div class="fact-content-title">2,744 / 588 / 588 split</div>
@@ -812,11 +812,11 @@ trusted blindly.
 </div></div>
 <div class="fact-item"><div class="fact-number">03</div><div>
 <div class="fact-content-title">Balanced by design</div>
-<div class="fact-content-body">The curated dataset is exactly 50/50 lens vs. non-lens. This is a deliberate training choice, not a claim that real surveys are balanced — see Rare-Object Detection above.</div>
+<div class="fact-content-body">The curated dataset is exactly 50/50 lens vs. non-lens. That's a deliberate training choice, not a claim that real surveys are balanced. See Rare-Object Detection above.</div>
 </div></div>
 <div class="fact-item"><div class="fact-number">04</div><div>
 <div class="fact-content-title">"Presumed" non-lens, not proven</div>
-<div class="fact-content-body">Negative examples are galaxies without a catalogued lens detection, not objects verified impossible to lens — a limitation carried through to model evaluation.</div>
+<div class="fact-content-body">Negative examples are galaxies without a catalogued lens detection, not objects verified impossible to lens. That limitation carries through to model evaluation.</div>
 </div></div>
 </div>
 """))
@@ -857,11 +857,11 @@ if True:
     st.caption("Quantitative comparison of test metrics across all evaluated models.")
     st.html(textwrap.dedent("""
 <div class="dev-note">
-<span class="dev-note-label">Developer Note — Which model would we use?</span>
+<span class="dev-note-label">Developer Note: Which model would we use?</span>
 <div class="dev-note-text">
 Honestly? It depends on what you care about. <b>ViT-B/16 is our best performer</b> on every
 metric. But if you care about <em>understanding why</em> a prediction was made, <b>CBAM is our
-personal favourite</b> — attention is baked into the architecture, not bolted on afterwards.
+personal favourite</b>, since attention is baked into the architecture instead of bolted on afterwards.
 Custom CNN is the scrappiest and still remarkably competitive. MobileNetV3 showed us how far
 pretrained ImageNet features stretch into domains they were never designed for.
 </div>
@@ -982,7 +982,7 @@ pretrained ImageNet features stretch into domains they were never designed for.
     )
     # st.dataframe() renders its own interactive grid and ignores a Styler's
     # text-align CSS (numbers default to right-aligned regardless of what the
-    # Styler sets) — rendering the Styler's own HTML respects it exactly.
+    # Styler sets). Rendering the Styler's own HTML respects it exactly.
     st.markdown(f'<div class="metrics-table-wrap">{styled.to_html()}</div>', unsafe_allow_html=True)
 # Try the Model
 st.html('<div id="try-the-model" class="scroll-anchor"></div>')
@@ -992,8 +992,8 @@ if True:
 <span class="section-label">Demo</span>
 <div class="section-heading">Try the Model</div>
 <div style="font-size:0.85rem;color:var(--text-muted);margin-top:-1rem;margin-bottom:1rem;">
-Active model: <b style="color:var(--accent-blue);">{active_label}</b> —
-switch models in the Evaluation section above.
+Active model: <b style="color:var(--accent-blue);">{active_label}</b>.
+Switch models in the Evaluation section above.
 </div>
 """))
     if "selected_image_bytes" not in st.session_state:
@@ -1011,7 +1011,7 @@ switch models in the Evaluation section above.
                     st.session_state.selected_image_name = sample_path.name
         st.divider()
     else:
-        st.caption("No sample images found in `sample_images/` — upload your own below.")
+        st.caption("No sample images found in `sample_images/`. Upload your own below.")
     st.html(textwrap.dedent("""
 <div style="font-size:0.95rem;font-weight:700;color:var(--text-primary);letter-spacing:0.01em;margin:var(--space-4) 0 var(--space-2);">Or upload your own</div>
 """))
@@ -1057,7 +1057,7 @@ switch models in the Evaluation section above.
                 st.pyplot(fig)
                 plt.close(fig)
                 st.caption(
-                    "Attention Rollout (Abnar & Zuidema, 2020) — multiplies attention "
+                    "Attention Rollout (Abnar & Zuidema, 2020) multiplies attention "
                     "weights across all 12 ViT encoder layers to show which image patches "
                     "most influenced the classification output."
                 )
@@ -1091,9 +1091,9 @@ switch models in the Evaluation section above.
             st.write("**Lens confidence**")
             st.progress(min(max(probability, 0.0), 1.0), text=f"{probability:.1%}")
             st.caption(
-                f"Decision threshold: {best_threshold:.2f} — tuned on validation-set F1 rather than "
+                f"Decision threshold: {best_threshold:.2f}. Tuned on validation-set F1 rather than "
                 "the default 0.5. Each model has its own threshold, so the same raw score can cross the "
-                "line differently across models — this one is tuned for the real-world imbalance, "
+                "line differently across models. This one is tuned for the real-world imbalance, "
                 "not the class-balanced training set."
             )
         with conf_col2:
@@ -1115,7 +1115,7 @@ if True:
 </div></div>
 <div class="fact-item"><div class="fact-number">02</div><div>
 <div class="fact-content-title">Grad-CAM shows influence, not proof</div>
-<div class="fact-content-body">It highlights image regions that most affected the prediction — it does not verify the model has learned the actual physics of lensing.</div>
+<div class="fact-content-body">It highlights image regions that most affected the prediction. It does not verify the model has learned the actual physics of lensing.</div>
 </div></div>
 <div class="fact-item"><div class="fact-number">03</div><div>
 <div class="fact-content-title">Arc & ring structure is the signal</div>
@@ -1131,7 +1131,7 @@ if True:
         show_result_figure(
             "fp_fn_gallery",
             caption="Real false positives and false negatives from the Custom CNN's test set, with the model's predicted probability. "
-                    "Several false positives are ordinary bright ellipticals — exactly the confound described below.",
+                    "Several false positives are ordinary bright ellipticals, which is exactly the confound described below.",
         )
     st.divider()
     st.html(textwrap.dedent("""
@@ -1141,10 +1141,10 @@ if True:
     st.html(textwrap.dedent("""
 <div class="glass-card">
 <ul>
-<li>This is a <b>student-scale prototype</b>, built for a final-year academic project — not a production astronomical pipeline.</li>
+<li>This is a <b>student-scale prototype</b>, built for a final-year academic project. It's not a production astronomical pipeline.</li>
 <li>The model is <b>not a validated astronomical discovery tool</b> and should not be used to draw real scientific conclusions.</li>
-<li><b>Dataset quality and provenance</b> directly affect performance: of the 4,076 labelled images (2,744/588/588 train/val/test), positive examples come from catalogue-listed lens systems of varying confidence, and negative examples are <i>presumed</i> non-lens galaxies, not objects proven impossible to lens.</li>
-<li>Results should be treated as <b>candidate screening</b> to prioritise objects for expert review — not as final scientific confirmation.</li>
+<li><b>Dataset quality and provenance</b> directly affect performance. Of the 4,076 labelled images (2,744/588/588 train/val/test), positive examples come from catalogue-listed lens systems of varying confidence, and negative examples are <i>presumed</i> non-lens galaxies, not objects proven impossible to lens.</li>
+<li>Results should be treated as <b>candidate screening</b> to prioritise objects for expert review, not as final scientific confirmation.</li>
 </ul>
 </div>
 """))
@@ -1153,11 +1153,11 @@ if True:
 <div class="fact-grid">
 <div class="fact-item"><div class="fact-number">01</div><div>
 <div class="fact-content-title">Student-scale dataset</div>
-<div class="fact-content-body">Trained on catalogue-listed lens candidates and presumed non-lens galaxies — not a fully expert-verified benchmark. Some lensing features may be faint or not clearly visible in the Legacy Survey JPEG cutouts.</div>
+<div class="fact-content-body">Trained on catalogue-listed lens candidates and presumed non-lens galaxies, not a fully expert-verified benchmark. Some lensing features may be faint or not clearly visible in the Legacy Survey JPEG cutouts.</div>
 </div></div>
 <div class="fact-item"><div class="fact-number">02</div><div>
 <div class="fact-content-title">Brightness confound (r = -0.81)</div>
-<div class="fact-content-body">Model confidence correlates with image brightness/compactness — likely a genuine structural difference between classes rather than a simple normalisation artefact.</div>
+<div class="fact-content-body">Model confidence correlates with image brightness and compactness. This is likely a genuine structural difference between classes rather than a simple normalisation artefact.</div>
 </div></div>
 <div class="fact-item"><div class="fact-number">03</div><div>
 <div class="fact-content-title">All four architectures converge</div>
@@ -1174,13 +1174,13 @@ if True:
         with bright_col1:
             show_result_figure(
                 "brightness_confound",
-                caption="Predicted probability vs. centre/edge brightness ratio (r = -0.81) — before any mitigation attempt.",
+                caption="Predicted probability vs. centre/edge brightness ratio (r = -0.81), before any mitigation attempt.",
             )
         with bright_col2:
             show_result_figure(
                 "brightness_confound_mitigated",
-                caption="Same test images after per-image normalisation (r = -0.81, unchanged) — the confound survives the fix, "
-                        "suggesting it reflects a genuine structural difference between classes rather than a lighting artefact.",
+                caption="Same test images after per-image normalisation (r = -0.81, unchanged). The confound survives the fix, "
+                        "which suggests it reflects a genuine structural difference between classes rather than a lighting artefact.",
             )
 # References
 st.html('<div id="references" class="scroll-anchor"></div>')
@@ -1192,19 +1192,19 @@ if True:
     st.html(textwrap.dedent("""
 <div class="glass-card">
 <ul>
-<li><b>CNN-based lens detection:</b> Lanusse et al. (2017), CMU DeepLens — early deep learning methods for automatic galaxy-galaxy strong lens finding.</li>
-<li><b>Strong Gravitational Lens Finding Challenge:</b> Metcalf et al. (2019) and Bom et al. (2022) — machine learning challenges framing lens detection as rare-object classification and highlighting the importance of controlling false positives.</li>
-<li><b>Sim-to-real gap:</b> Pearce-Casey et al. (2024) — Euclid strong lens searches, showing that models trained on simulated/controlled data can be harder to apply to real survey images.</li>
-<li><b>Grad-CAM:</b> Selvaraju et al. (2017) — gradient-based visual explanations used throughout this app's explainability features.</li>
-<li><b>Attention Rollout:</b> Abnar & Zuidema (2020) — used here for ViT explainability, propagating attention weights across all encoder layers.</li>
-<li><b>Simulated data tooling:</b> lenstronomy / deeplenstronomy (Birrer &amp; Amara, 2018) — used for this project's simulated baseline model.</li>
+<li><b>CNN-based lens detection:</b> Lanusse et al. (2017), CMU DeepLens. Early deep learning methods for automatic galaxy-galaxy strong lens finding.</li>
+<li><b>Strong Gravitational Lens Finding Challenge:</b> Metcalf et al. (2019) and Bom et al. (2022). Machine learning challenges framing lens detection as rare-object classification and highlighting the importance of controlling false positives.</li>
+<li><b>Sim-to-real gap:</b> Pearce-Casey et al. (2024). Euclid strong lens searches, showing that models trained on simulated/controlled data can be harder to apply to real survey images.</li>
+<li><b>Grad-CAM:</b> Selvaraju et al. (2017). Gradient-based visual explanations used throughout this app's explainability features.</li>
+<li><b>Attention Rollout:</b> Abnar & Zuidema (2020). Used here for ViT explainability, propagating attention weights across all encoder layers.</li>
+<li><b>Simulated data tooling:</b> lenstronomy / deeplenstronomy (Birrer &amp; Amara, 2018). Used for this project's simulated baseline model.</li>
 </ul>
 </div>
 """))
 # Footer
 st.html(textwrap.dedent("""
 <div class="footer-card">
-    Built by Ahana Bhattacharji &amp; Vaishnav Malvankar ·
+    Built by Vaishnav Malvankar &amp; Ahana Bhattacharji ·
     Explainable Deep Learning for Gravitational Lens Detection in Astronomical Survey Images ·
     Student research prototype, not a validated scientific tool.
 </div>
