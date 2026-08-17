@@ -109,24 +109,23 @@ pipeline/data/metadata/quality_metadata.csv
 ├── requirements.txt
 ├── Literature Review.pdf
 ├── Ahana & Vaishnav_Literature Review.pdf
-└── pipeline/
-    ├── data/
-    │   ├── catalog.csv
-    │   ├── gravitational_lenses.parquet
-    │   ├── metadata/
-    │   └── raw/
-    │       ├── lens/
-    │       ├── non_lens/
-    │       └── probable/
-    ├── deployment/
-    │   ├── app.py
-    │   ├── artifacts/
-    │   ├── sample_images/
-    │   └── website images/
-    ├── figures/
-    ├── models/
-    ├── results/
-    └── scripts/
+├── data/
+│   ├── catalog.csv
+│   ├── gravitational_lenses.parquet
+│   ├── metadata/
+│   └── raw/
+│       ├── lens/
+│       ├── non_lens/
+│       └── probable/
+├── deployment/
+│   ├── app.py
+│   ├── artifacts/
+│   ├── sample_images/
+│   └── website images/
+├── figures/
+├── models/
+├── results/
+└── scripts/
 ```
 
 ---
