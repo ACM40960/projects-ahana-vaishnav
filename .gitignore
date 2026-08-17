@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+.venv312/
+
+# Large model weights
+*.pt
+*.pth
+*.ckpt
+models/

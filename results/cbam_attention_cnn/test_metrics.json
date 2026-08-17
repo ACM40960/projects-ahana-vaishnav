@@ -1,0 +1,24 @@
+{
+    "model": "CBAM-augmented CNN (channel + spatial attention, trained from scratch)",
+    "total_params": 27530,
+    "n_train": 2744,
+    "n_val": 588,
+    "n_test": 588,
+    "best_threshold": 0.38,
+    "best_validation_f1": 0.9387040280210157,
+    "test_accuracy_default_metric": 0.9319727891156463,
+    "test_precision_default_metric": 0.9060402684563759,
+    "test_recall_default_metric": 0.9574468085106383,
+    "roc_auc_sklearn": 0.9845176841422149,
+    "pr_auc_sklearn": 0.9864502750606268,
+    "confusion_matrix_best_threshold": [
+        [
+            278,
+            28
+        ],
+        [
+            12,
+            270
+        ]
+    ]
+}

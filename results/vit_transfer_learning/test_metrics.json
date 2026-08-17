@@ -1,0 +1,25 @@
+{
+    "model": "ViT-B/16 (frozen backbone, transfer learning)",
+    "trainable_params": 24641,
+    "total_params": 86592297,
+    "n_train": 2744,
+    "n_val": 588,
+    "n_test": 588,
+    "best_threshold": 0.65,
+    "best_validation_f1": 0.9588550983899821,
+    "test_accuracy_default_metric": 0.9625850340136054,
+    "test_precision_default_metric": 0.9850746268656716,
+    "test_recall_default_metric": 0.9361702127659575,
+    "roc_auc_sklearn": 0.992339961989524,
+    "pr_auc_sklearn": 0.9935370418979863,
+    "confusion_matrix_best_threshold": [
+        [
+            302,
+            4
+        ],
+        [
+            18,
+            264
+        ]
+    ]
+}
