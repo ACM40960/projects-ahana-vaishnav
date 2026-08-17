@@ -62,7 +62,7 @@ All models were evaluated on the same stratified test split.
 Full metrics, thresholds, confusion matrices, and plots are stored in:
 
 ```text
-pipeline/results/
+results/
 ```
 
 ---
@@ -92,12 +92,6 @@ The raw data also includes a separate **probable lens** tier. These images were 
 4. Images were downloaded as Legacy Survey DR10 JPEG cutouts.
 5. Basic quality checks removed blank, unreadable, or off-target images.
 6. The final data was split into train, validation, and test sets.
-
-The quality metadata is stored in:
-
-```text
-pipeline/data/metadata/quality_metadata.csv
-```
 
 ---
 
@@ -148,14 +142,14 @@ pip install -r requirements.txt --extra-index-url https://download.pytorch.org/w
 Run the Streamlit app locally:
 
 ```bash
-cd pipeline/deployment
+cd deployment
 streamlit run app.py
 ```
 
 The app uses the exported model files in:
 
 ```text
-pipeline/deployment/artifacts/
+deployment/artifacts/
 ```
 
 The ViT-B/16 model uses a frozen ImageNet backbone from `torchvision`. Only the trained head is stored in the repository; the backbone may be downloaded automatically the first time ViT is used.
@@ -167,7 +161,7 @@ The ViT-B/16 model uses a frozen ImageNet backbone from `torchvision`. Only the 
 The main scripts are stored in:
 
 ```text
-pipeline/scripts/
+scripts/
 ```
 
 Run them in numbered order.
@@ -197,13 +191,13 @@ export_vit_head_only.py
 The full Galaxy10-DECaLS H5 file is not included in the repository. To rebuild the non-lens dataset from scratch, download `Galaxy10_DECals.h5` separately and place it here:
 
 ```text
-pipeline/data/raw/Galaxy10_DECals.h5
+data/raw/Galaxy10_DECals.h5
 ```
 
 Then run:
 
 ```bash
-python pipeline/scripts/create_non_lens_dataset.py
+python scripts/create_non_lens_dataset.py
 ```
 
 ---
@@ -222,9 +216,9 @@ A good lens-candidate prediction should ideally focus on arc-like or ring-like s
 Generated explainability outputs are stored in:
 
 ```text
-pipeline/results/real_data_cnn/
-pipeline/results/cbam_attention_cnn/
-pipeline/results/vit_transfer_learning/
+results/real_data_cnn/
+results/cbam_attention_cnn/
+results/vit_transfer_learning/
 ```
 
 ---
@@ -247,13 +241,13 @@ These limitations are part of the analysis rather than a failure of the project.
 
 | File / folder | Purpose |
 |---|---|
-| `pipeline/deployment/app.py` | Streamlit demo app |
-| `pipeline/deployment/artifacts/` | Exported model weights and preprocessing configs |
-| `pipeline/scripts/` | Data, training, evaluation, and deployment scripts |
-| `pipeline/results/model_comparison/` | Model comparison outputs |
-| `pipeline/results/*/test_metrics.json` | Test metrics for each model |
-| `pipeline/results/*/classification_report.txt` | Classification reports |
-| `pipeline/data/metadata/quality_metadata.csv` | Final quality-filtered image metadata |
+| `deployment/app.py` | Streamlit demo app |
+| `deployment/artifacts/` | Exported model weights and preprocessing configs |
+| `scripts/` | Data, training, evaluation, and deployment scripts |
+| `results/model_comparison/` | Model comparison outputs |
+| `results/*/test_metrics.json` | Test metrics for each model |
+| `results/*/classification_report.txt` | Classification reports |
+| `data/metadata/quality_metadata.csv` | Final quality-filtered image metadata |
 
 ---
 
