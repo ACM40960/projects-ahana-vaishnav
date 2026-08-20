@@ -118,6 +118,19 @@ The raw data also includes a separate **probable lens** tier. These images were 
 │   └── website images/
 ├── figures/
 ├── models/
+│   ├── README.md
+│   ├── cbam_attention_cnn/
+│   │   ├── best_cbam_attention_cnn.pt
+│   │   └── final_cbam_attention_cnn.pt
+│   ├── real_data_cnn/
+│   │   ├── best_real_data_cnn.pt
+│   │   └── final_real_data_cnn.pt
+│   ├── real_data_cnn_brightness_mitigated/
+│   │   ├── best_brightness_mitigated_cnn.pt
+│   │   └── final_brightness_mitigated_cnn.pt
+│   └── transfer_learning_cnn/
+│   │   ├── best_transfer_learning_cnn.pt
+│   │   └── final_transfer_learning_cnn.pt
 ├── results/
 └── scripts/
 ```
