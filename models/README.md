@@ -1,8 +1,8 @@
 # Models
 
-This folder is reserved for trained model weights.
+This folder stores trained model weights used in the project.
 
-Large `.pt` model files are not committed to this repository because they exceed GitHub's normal file size limit.
+The ViT-B/16 model weight files are not included in this repository because the full `.pt` files are too large for normal GitHub upload.
 
 The Streamlit app uses exported deployment artifacts from:
 
