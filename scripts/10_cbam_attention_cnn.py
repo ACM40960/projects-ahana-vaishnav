@@ -27,7 +27,7 @@ MODELS_DIR = BASE_FOLDER / "models" / "cbam_attention_cnn"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
 IMAGE_SIZE = 128
-RANDOM_SEED = 42
+RANDOM_SEED = 25206621
 BATCH_SIZE = 32
 MAX_EPOCHS = 60
 EARLY_STOP_PATIENCE = 10
