@@ -10,7 +10,7 @@ METADATA_PATH = BASE_FOLDER / "data" / "metadata" / "quality_metadata.csv"
 DEPLOY_DIR = BASE_FOLDER / "deployment" / "artifacts"
 DEPLOY_DIR.mkdir(parents=True, exist_ok=True)
 IMAGE_SIZE = 128
-RANDOM_SEED = 42
+RANDOM_SEED = 25206621
 
 # Model definitions
 class RealDataCNN(nn.Module):
