@@ -27,7 +27,7 @@ MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Main training settings
 IMAGE_SIZE = 128
-RANDOM_SEED = 42
+RANDOM_SEED = 25206621
 BATCH_SIZE = 32
 MAX_EPOCHS = 60
 EARLY_STOP_PATIENCE = 10
