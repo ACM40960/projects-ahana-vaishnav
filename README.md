@@ -152,7 +152,7 @@ The app uses the exported model files in:
 deployment/artifacts/
 ```
 
-The ViT-B/16 model uses a frozen ImageNet backbone from `torchvision`. Only the trained head is stored in the repository; the backbone may be downloaded automatically the first time ViT is used.
+The ViT-B/16 model uses a frozen ImageNet backbone from `torchvision`. Large full-model `.pt` files are not committed; the deployed version uses lightweight exported artifacts where possible.
 
 ---
 
