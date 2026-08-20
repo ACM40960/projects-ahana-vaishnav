@@ -1,8 +1,0 @@
-              precision    recall  f1-score   support
-
-    non_lens       0.95      0.94      0.95       306
-        lens       0.94      0.94      0.94       282
-
-    accuracy                           0.94       588
-   macro avg       0.94      0.94      0.94       588
-weighted avg       0.94      0.94      0.94       588
