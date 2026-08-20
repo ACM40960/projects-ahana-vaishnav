@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 from PIL import Image, UnidentifiedImageError
 
-
 # Go back to the main project folder from the scripts folder
 BASE_FOLDER = Path(__file__).resolve().parent.parent
 
@@ -26,7 +25,7 @@ GRID_PATH = FIGURE_FOLDER / "dataset_sample_grid.png"
 METADATA_FOLDER.mkdir(parents=True, exist_ok=True)
 FIGURE_FOLDER.mkdir(parents=True, exist_ok=True)
 
-RANDOM_SEED = 42
+RANDOM_SEED = 25206621
 VALID_EXTENSIONS = {".jpg", ".jpeg", ".png"}
 
 random.seed(RANDOM_SEED)
@@ -60,7 +59,7 @@ def scan_image_folder(folder: Path, label: int, class_name: str) -> list[dict]:
             "pixel_std": None,
             "file_hash": None,
             "usable": 1,
-            "notes": "",
+            "notes": ""
         }
 
         try:
@@ -111,7 +110,7 @@ print(f"\nLabels saved to: {LABELS_PATH}")
 print(f"Duplicates saved to: {DUPLICATES_PATH}")
 
 # Keep only images that can actually be used
-usable = metadata[(metadata["readable"] == 1) & (metadata["usable"] == 1)].copy()\
+usable = metadata[(metadata["readable"] == 1) & (metadata["usable"] == 1)].copy()
 
 # Take a small random sample from both classes for visual checking
 lens_sample = usable[usable["label"] == 1].sample(n=min(8, (usable["label"] == 1).sum()),random_state=RANDOM_SEED)
