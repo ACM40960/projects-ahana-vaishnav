@@ -16,7 +16,7 @@ METADATA_PATH = BASE_FOLDER / "data" / "metadata" / "quality_metadata.csv"
 RESULTS_DIR = BASE_FOLDER / "results" / "real_data_cnn"
 MODEL_PATH = BASE_FOLDER / "models" / "real_data_cnn" / "best_real_data_cnn.pt"
 IMAGE_SIZE = 128
-RANDOM_SEED = 42
+RANDOM_SEED = 25206621
 
 # Use GPU if available
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
