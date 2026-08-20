@@ -32,7 +32,7 @@ NUMBER_TO_DOWNLOAD = 2038
 # Sample more than needed because some objects are removed after Lenscat filtering
 CANDIDATE_POOL_SIZE = 6000
 
-RANDOM_SEED = 42
+RANDOM_SEED = 25206621
 
 # Use the same cutout settings as the lens images
 IMAGE_SIZE = 128
