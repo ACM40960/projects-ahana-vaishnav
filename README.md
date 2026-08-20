@@ -256,6 +256,7 @@ These limitations are part of the analysis rather than a failure of the project.
 - Lanusse et al. (2017), *CMU DeepLens: Deep learning for automatic image-based galaxy-galaxy strong lens finding*
 - Metcalf et al. (2019), *The Strong Gravitational Lens Finding Challenge*
 - Bom et al. (2022), *Developing a victorious strategy to the Second Strong Gravitational Lensing Data Challenge*
+- Wilde et al. (2022), *Detecting gravitational lenses using machine learning: exploring interpretability and sensitivity to rare lensing configurations*
 - Selvaraju et al. (2017), *Grad-CAM: Visual explanations from deep networks via gradient-based localization*
 - Woo et al. (2018), *CBAM: Convolutional Block Attention Module*
 - Dosovitskiy et al. (2021), *An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale*
