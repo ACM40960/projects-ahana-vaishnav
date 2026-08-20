@@ -35,7 +35,7 @@ MODELS_DIR.mkdir(parents=True, exist_ok=True)
 VIT_IMAGE_SIZE = 224  # ViT-B/16's required input resolution
 PATCH_SIZE = 16
 GRID_SIZE = VIT_IMAGE_SIZE // PATCH_SIZE  # 14x14 patches
-RANDOM_SEED = 42
+RANDOM_SEED = 25206621
 BATCH_SIZE = 16  # smaller than other scripts — ViT at 224x224 uses more memory
 MAX_EPOCHS = 40
 EARLY_STOP_PATIENCE = 8
